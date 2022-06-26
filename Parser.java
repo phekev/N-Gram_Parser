@@ -3,51 +3,55 @@ package ie.atu.sw;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 
-public class Parser {
+public class Parser{
 
-    public Object[][] getTable() {
-        return table;
+    public NGram[] getTable() {
+        return this.table;
     }
 
-    private Object[][] table;
+    private NGram[] table;
 
-    // List of the 1st prime number larger than 26^nGramSize
+    // List of the 1st prime number larger than 26^nGramSize - using primes for a better hashcode
     private final int[] PRIMES = { 29, 677, 17579, 456979, 11881379, 308915797 };
 
     public Parser(UserInputtedData userData) {
         // If nGram size is in range 1-6 use the nGram size to set the table size
         if (userData.getNGramSize() <= 6)
-            table = new Object[PRIMES[userData.getNGramSize()-1]][2];
+            this.table = new NGram[PRIMES[userData.getNGramSize()-1]];
         // If not, then use the largest PRIME in the array to set the table size - this may result in lost data
         else
-            table = new Object[PRIMES[PRIMES.length-1]][2];
+            this.table = new NGram[PRIMES[PRIMES.length-1]];
     }
 
     public void addNGram (String ngram) {
         int index = ngram.hashCode() % this.table.length;
         long counter = 1;
-        if ( this.table[index][0] == null ) {
-            this.table[index][0] = ngram;
-            this.table[index][1] = counter;
-        } else {
+        if ( this.table[index] == null )
+            this.table[index] = new NGram(ngram, counter);
+        else
             getNextAvailableIndex(index, ngram, counter);
-        }
-    }
 
+    }
+/*
+    //Returns the nGram at the index passed in
+    private String getNGram ( int index ) {
+        return (String) this.table[index][0];
+    }
+*/
     // There has been a collision while hashing. Use linear probing to resolve this
     private void getNextAvailableIndex(int index, String ngram, long counter) {
         // Current index contains the ngram that is to be added - increment with the counter
-        if (Objects.equals(ngram, this.table[index][0])) {
-            this.table[index][1] = (long) this.table[index][1] + counter;
+        if (this.table[index] != null && Objects.equals(ngram, this.table[index].getNgram())) {
+            this.table[index].setCounter((long) this.table[index].getCounter() + counter);
             return;
         }
         // Current index is empty - ngram can be entered here
-        else if (this.table[index][0] == null) {
-            this.table[index][0] = ngram;
-            this.table[index][1] = counter;
+        else if (this.table[index] == null) {
+            this.table[index] = new NGram(ngram, counter);
             return;
         }
         // Increment index and call getNextAvailableIndex
@@ -107,6 +111,7 @@ public class Parser {
             System.exit(0);
         }
     }
+
 
 
 }
