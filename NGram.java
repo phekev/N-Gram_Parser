@@ -1,6 +1,9 @@
 package ie.atu.sw;
 
-public class NGram implements Comparable<NGram>{
+import java.util.Collections;
+import java.util.Comparator;
+
+public class NGram{
     private String ngram;
     private long counter;
 
@@ -25,6 +28,11 @@ public class NGram implements Comparable<NGram>{
         this.counter = counter;
     }
 
+
+/*
+    Firstly, I implemented comparable to sort the ngram array. That was throwing NPE, so I added some
+    null checking.
+    Then, I
     @Override
     public int compareTo(NGram otherNgram) {
         if (this.getNgram() == null && otherNgram.getNgram() == null)
@@ -37,7 +45,7 @@ public class NGram implements Comparable<NGram>{
             return this.getNgram().compareTo(otherNgram.getNgram());
 
     }
-
+*/
 
 
 }

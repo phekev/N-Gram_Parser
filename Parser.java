@@ -60,7 +60,6 @@ public class Parser{
             // At end of table - loop back to 0th index and continue searching for a free index
             if (index == this.table.length) {
                 index = 0;
-                System.out.println("********** Looped to start of table ***********");
             }
             getNextAvailableIndex(index, ngram, counter);
         }
@@ -88,7 +87,7 @@ public class Parser{
             } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
+            System.out.println("ERROR: Cannot read from " + file);
             e1.printStackTrace();
         }
 

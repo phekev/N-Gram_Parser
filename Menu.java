@@ -86,7 +86,6 @@ public class Menu {
     }
     private void getOutputFileName(Scanner s, UserInputtedData userData) {
         System.out.println("Enter the OUTPUT filename");
-        System.out.println("Example: 'file' will save as 'file.csv'");
         String filename = s.next();
         userData.setOutputFilename(filename + ".csv");
         try {
@@ -103,6 +102,7 @@ public class Menu {
             System.out.println("Files parsed");
             try {
                 System.out.println("Saving file...");
+
                 NGramOutputter.save(parser.getTable(), userData.getOutputFilename());
                 System.out.println("Done");
                 exit();
