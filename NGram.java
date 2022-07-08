@@ -28,24 +28,4 @@ public class NGram{
         this.counter = counter;
     }
 
-
-/*
-    Firstly, I implemented comparable to sort the ngram array. That was throwing NPE, so I added some
-    null checking.
-    Then, I
-    @Override
-    public int compareTo(NGram otherNgram) {
-        if (this.getNgram() == null && otherNgram.getNgram() == null)
-            return 0;
-        else if (this.getNgram() == null && otherNgram.getNgram() != null)
-            return -1;
-        else if (this.getNgram() != null && otherNgram.getNgram() == null)
-            return 1;
-        else
-            return this.getNgram().compareTo(otherNgram.getNgram());
-
-    }
-*/
-
-
 }

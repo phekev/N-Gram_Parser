@@ -63,7 +63,7 @@ public class NGramOutputter {
         // Loop over original array, copy any non-null index to tableWithNoNulls
         for (int i=0; i<table.length; i++) {
             if (table[i] != null) {
-                counter++;
+                counter++;  // Add one to the counter - https://www.lysator.liu.se/c/pikestyle.html
                 tableWithNoNulls[counter] = table[i];
             }
         }

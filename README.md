@@ -10,7 +10,7 @@ b)
 ie.atu.sw.Runner [inputFileDirectory] [nGramSize] [outputFilename] <Optional - Use a sliding window for producing nGrams>[Default False]
   eg. java ie.atu.sw.Runner textfiles 5 ngrams false
 This will result in the program...
-	1. looking for a folder named 'textfiles' 
+	1. "loading" any files present in the 'textfiles' directory
 	2. processing the files in the folder using a ngram size of 5
 	3. since sliding window is set to false, then block ngrams will be produced
 		eg. "happydays" will produce "happy" with block ngrams
@@ -30,7 +30,7 @@ The menu will give options as follows
    (6) Print out current parameters
    (7) Quit
 
-Option 5 will execute the ngram parser
+Option 5 will execute the ngram parser - if the correct parameters are not entered you will be prompted to enter them. 
 
 Ngrams are stored as an object of type NGram in an array
 These objects have two fields:
@@ -44,4 +44,4 @@ If hash collisons occur, this is handled using linear probing.
 
 
 The output files are sorted using comparators for the NGram.ngram & NGram.counter fields
-
+There will be 2 files created - [yourFileName]_sorted_by_ngram.csv & [yourFileName]_sorted_by_counter.csv

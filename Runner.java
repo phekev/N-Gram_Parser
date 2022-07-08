@@ -42,7 +42,6 @@ public class Runner {
             // Optional - if there is a 4th index and it equals either true or false
             if ( args.length>3 && (args[3].toLowerCase().equals("true") || args[3].toLowerCase().equals("false") )) {
                 userData.setIsWindowSliding(Boolean.parseBoolean(args[3]));
-                    System.out.println(userData.getIsWindowSliding());
             }
             // If there was not a 4th index, setIsWindowSliding = false
             else userData.setIsWindowSliding(false);
@@ -52,7 +51,7 @@ public class Runner {
             throw new RuntimeException(e);
         }
         Menu menu = new Menu();
-        // Run build() which executes the ngram parser
+        // Run Menu#build() which executes the ngram parser
         menu.build(userData);
     }
 
@@ -62,7 +61,8 @@ public class Runner {
         System.out.println("*   This program can run using command line arguments" +
                             "\n" +
                             "\n");
-        System.out.println("*Usage: Runner [directory] [nGramSize] [outputFilename] optional:[useSlidingWindowForNGrams] ");
+        System.out.println("*Usage: ie.atu.sw.Runner [directory] [nGramSize] [outputFilename] optional:[useSlidingWindowForNGrams] ");
+        System.out.println("*Example: ie.atu.sw.Runner yourDirectoryPath 5 aCreativeFileName true ");
         System.out.println("*      [directory]      -  name directory containing files to be parsed");
         System.out.println("*      [nGramSize]      -  size of nGram to be used e.g. 5");
         System.out.println("*      [outputFilename] -  filename to output results");

@@ -26,7 +26,53 @@ public class Parser{
         else
             this.table = new NGram[PRIMES[PRIMES.length-1]];
     }
+    //  Parser#parseDirectory - creates an array of files to be parsed
+    public void parseDirectory (UserInputtedData userData ){
+        File f = new File(userData.getDirectory());
+        String[] files = f.list();
+        if(files != null) {
+            String fileSeparator = FileSystems.getDefault().getSeparator();     //Get platform appropriate file separator / on Unix based systems or \ on Windows
+            // For each file in the array call the parse() method
+            for (String file : files) {
+                parse(f.getAbsolutePath() + fileSeparator + file, userData);         //Creating full path for each file folderName/fileName
+                System.out.println(file + " parsed...");
+            }
+        } else {
+            System.out.println("The directory name entered does not exist or is referenced incorrectly");
+            System.exit(0);
+        }
+    }
+    public void parse (String file, UserInputtedData userData) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file) ))) {
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                String[] words = line.split( "\\s+" );
+                // Append all the words to a stringbuilder
+                for (int i=0; i< words.length; i++) {
+                    sb.append(words[i].trim().toLowerCase().replaceAll("[^a-zA-Z]", ""));
+                }
+            }
+            processNGram(sb.toString(), userData);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e1) {
+            System.out.println("ERROR: Cannot read from " + file);
+            e1.printStackTrace();
+        }
 
+    }
+    public void processNGram (String words, UserInputtedData userData) {
+        // If nGram window is sliding - increment value is 1
+        int incrementSize = userData.getIsWindowSliding() ? 1 : userData.getNGramSize();
+        for (int i=0; i<words.length()-userData.getNGramSize(); i+=incrementSize){
+            addNGram(words.substring(i, i + userData.getNGramSize()));}
+    }
+    /*
+     * addNGram()
+     * If table[index] is empty add ngram there
+     * Else, call getNextAvailableIndex
+     */
     public void addNGram (String ngram) {
         int index = ngram.hashCode() % this.table.length;
         long counter = 1;
@@ -36,12 +82,6 @@ public class Parser{
             getNextAvailableIndex(index, ngram, counter);
 
     }
-/*
-    //Returns the nGram at the index passed in
-    private String getNGram ( int index ) {
-        return (String) this.table[index][0];
-    }
-*/
     // There has been a collision while hashing. Use linear probing to resolve this
     private void getNextAvailableIndex(int index, String ngram, long counter) {
         // Current index contains the ngram that is to be added - increment with the counter
@@ -64,53 +104,4 @@ public class Parser{
             getNextAvailableIndex(index, ngram, counter);
         }
     }
-
-
-    public void processNGram (String words, UserInputtedData userData) {
-        // If nGram window is sliding - increment value is 1
-        int incrementSize = userData.getIsWindowSliding() ? 1 : userData.getNGramSize();
-        for (int i=0; i<words.length()-userData.getNGramSize(); i+=incrementSize){
-            addNGram(words.substring(i, i + userData.getNGramSize()));}
-    }
-
-    public void parse (String file, UserInputtedData userData) {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file) ))) {
-                String line;
-                StringBuilder sb = new StringBuilder();
-                while ((line = reader.readLine()) != null) {
-                    String[] words = line.split( "\\s+" );
-                    for (int i=0; i< words.length; i++) {
-                        sb.append(words[i].trim().toLowerCase().replaceAll("[^a-zA-Z]", ""));
-                    }
-                }
-                processNGram(sb.toString(), userData);
-            } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e1) {
-            System.out.println("ERROR: Cannot read from " + file);
-            e1.printStackTrace();
-        }
-
-    }
-
-    //  Parser#parseDirectory - creates an array of files to be parsed & 
-
-    public void parseDirectory (UserInputtedData userData ){
-        File f = new File(userData.getDirectory());
-        System.out.println("f...."+f.getAbsolutePath());
-        String[] files = f.list();
-        System.out.println(Arrays.deepToString(files));
-        if(files != null) {
-            String fileSeparator = FileSystems.getDefault().getSeparator();     //Get platform appropriate file separator / on Unix based systems or \ on Windows
-            for (String file : files) {
-                parse(f.getAbsolutePath() + fileSeparator + file, userData);         //Creating full path for each file folderName/fileName
-            }
-        } else {
-            System.out.println("The directory name entered does not exist or is referenced incorrectly");
-            System.exit(0);
-        }
-    }
-
-
-
 }
