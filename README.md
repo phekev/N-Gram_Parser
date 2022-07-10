@@ -33,7 +33,8 @@ The menu will give options as follows
    (6) Print out current parameters
    (7) Quit
    
-   ![ngram_run_from_menu](https://user-images.githubusercontent.com/81191184/178159068-7ab44b58-5f69-4752-8052-eecab0ed7843.jpg)
+  
+![ngram_menu](https://user-images.githubusercontent.com/81191184/178159302-bd5b42ca-7573-4c00-bacc-7c86cc70cc7c.jpg)
 
 
 Option 5 will execute the ngram parser - if the correct parameters are not entered you will be prompted to enter them. 
