@@ -20,7 +20,7 @@ This will result in the program...
 			but would produce "happy", "appyd", "ppyda", "pyday", "ydays" with sliding window set to true
 	4. then 2 files will be output on sucessful parsing of the files
 		i) ngrams_sorted_by_ngram.csv
-		ii) nrams_sorted_by_counter.csv
+		ii) ngrams_sorted_by_counter.csv
 
 c)
 Alternatively, if no agruments are passed at the commandline then the menu will display
